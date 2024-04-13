@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .app {
+        height: 100%;
+        overflow: auto;
+      }
+
+      .box {
+        height: 1000px;
+      }
+
+      img {
+        display: block;
+        height: 100px;
+        width: 100px;
+        margin-bottom: 20px;
+        background-color: pink;
+      }
+
+      body {
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="box"></div>
+
+      <img src="" alt="图片" data-src="./fengjing.jpeg" />
+      <!-- <img src="" alt="图片" data-src="./fengjing.jpeg" />
+      <img src="" alt="图片" data-src="./fengjing.jpeg" />
+      <img src="./fengjing.jpeg" alt="图片" data-src="" /> -->
+    </div>
+
+    <script>
+      const lazyLoad = () => {
+        const vh = window.innerHeight;
+
+        const imgList = document.querySelectorAll("img[data-src]");
+        imgList.forEach((img, index) => {
+          console.log(img.offsetTop, document.documentElement.scrollTop + document.documentElement.clientHeight);
+          // rect = img.getBoundingClientRect();
+          // console.log(vh, rect.top);
+          // if (rect.top < vh && rect.bottom >= 0) {
+          //   img.src = img.getAttribute("data-src");
+          // }
+        });
+      };
+
+      window.addEventListener("scroll", () => {
+        lazyLoad();
+      });
+    </script>
+  </body>
+</html>

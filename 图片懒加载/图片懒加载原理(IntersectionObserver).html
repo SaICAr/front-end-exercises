@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .app {
+        height: 100%;
+        overflow: auto;
+      }
+
+      .box {
+        height: 1000px;
+      }
+
+      img {
+        display: block;
+        height: 100px;
+        width: 100px;
+        margin-bottom: 20px;
+        background-color: pink;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="box"></div>
+
+      <img src="" alt="图片" data-src="./fengjing.jpeg" />
+      <img src="" alt="图片" data-src="./fengjing.jpeg" />
+      <img src="" alt="图片" data-src="./fengjing.jpeg" />
+      <img src="./fengjing.jpeg" alt="图片" data-src="" />
+    </div>
+
+    <script>
+      const imgList = document.querySelectorAll("img[data-src]");
+      const observer = new IntersectionObserver((entries) => {
+        console.log("触发");
+        entries.forEach((i) => {
+          if (i.isIntersecting) {
+            const img = i.target;
+            img.src = img.getAttribute("data-src");
+            img.removeAttribute("data-src");
+
+            observer.unobserve(img);
+          }
+        });
+      });
+
+      imgList.forEach((img) => {
+        observer.observe(img);
+      });
+    </script>
+  </body>
+</html>

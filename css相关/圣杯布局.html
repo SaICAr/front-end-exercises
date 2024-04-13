@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .left,
+      .right,
+      .main {
+        height: 100px;
+      }
+      .container {
+        margin-left: 200px;
+        margin-right: 200px;
+      }
+      .main {
+        float: left;
+        width: 100%;
+        background-color: green;
+      }
+      .left {
+        float: left;
+        position: relative;
+        left: -200px;
+        margin-left: -100%;
+        width: 200px;
+        background-color: red;
+      }
+      .right {
+        float: left;
+        position: relative;
+        right: -200px;
+        margin-left: -200px;
+        width: 200px;
+        background-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="main">中间</div>
+      <div class="left">左边</div>
+      <div class="right">右边</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*  {
+        tag: 'DIV',
+        attrs:{
+        id:'app'
+        },
+        children: [
+          {
+            tag: 'SPAN',
+            children: [
+              { tag: 'A', children: [] }
+            ]
+          },
+          {
+            tag: 'SPAN',
+            children: [
+              { tag: 'A', children: [] },
+              { tag: 'A', children: [] }
+            ]
+          }
+        ]
+      }
+      把上诉虚拟Dom转化成下方真实Dom
+      <div id="app">
+        <span>
+          <a></a>
+        </span>
+        <span>
+          <a></a>
+          <a></a>
+        </span>
+      </div> */
+
+      const vNode = {
+        tag: "div",
+        attrs: {
+          id: "app",
+        },
+        children: [
+          {
+            tag: "span",
+            children: [{ tag: "a", children: [] }],
+          },
+          {
+            tag: "span",
+            children: [
+              { tag: "a", children: [] },
+              { tag: "a", children: [] },
+            ],
+          },
+        ],
+      };
+
+      const _render = (vNode) => {
+        const { tag, attrs, children } = vNode;
+
+        const el = document.createElement(tag);
+        if (attrs && Object.keys(attrs).length) {
+          Object.keys(attrs).forEach((key) => {
+            el.setAttribute(key, attrs[key]);
+          });
+        }
+        if (children?.length) {
+          children.forEach((child) => el.appendChild(_render(child)));
+        }
+
+        return el;
+      };
+
+      document.body.appendChild(_render(vNode));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .app {
+        height: 100%;
+        overflow: auto;
+      }
+
+      .box {
+        height: 1000px;
+      }
+
+      img {
+        display: block;
+        height: 100px;
+        width: 100px;
+        margin-bottom: 20px;
+        background-color: pink;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="box"></div>
+
+      <img src="" alt="图片" data-src="./fengjing.jpeg" />
+      <!-- <img src="" alt="图片" data-src="./fengjing.jpeg" />
+      <img src="" alt="图片" data-src="./fengjing.jpeg" />
+      <img src="./fengjing.jpeg" alt="图片" data-src="" /> -->
+    </div>
+
+    <script>
+      /**
+       * 图片懒加载
+       * 图片先使用占位图，当图片处于可视区域内时，请求图片资源并替换图片url
+       * 计算方式: clientHeight - getBoundingClientRect.top > 0
+       */
+
+      const lazyLoad = () => {
+        const vh = window.innerHeight;
+
+        const imgList = document.querySelectorAll("img[data-src]");
+        imgList.forEach((img, index) => {
+          rect = img.getBoundingClientRect();
+          
+          if (rect.top < vh && rect.bottom >= 0) {
+            img.src = img.getAttribute("data-src");
+          }
+        });
+      };
+
+      window.addEventListener("scroll", () => {
+        lazyLoad();
+      });
+    </script>
+  </body>
+</html>
