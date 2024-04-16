@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vue3 reactive</title>
+  </head>
+  <body>
+    <script type="module">
+      import { reactive, ref, watchEffect } from "./reactive.js";
+      let product = reactive({ price: 5, quantity: 2 });
+      let salePrice = ref(0);
+      let total = 0;
+
+      watchEffect(() => {
+        salePrice.value = product.price * 0.9;
+        // console.log("salePrice", salePrice.value);
+      });
+
+      watchEffect(() => {
+        total = salePrice.value * product.quantity;
+        console.log("total: " + total);
+      });
+
+      product.price = 10;
+    </script>
+  </body>
+</html>

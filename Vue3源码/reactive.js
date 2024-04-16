@@ -1,30 +1,16 @@
-let product = reactive({ price: 5, quantity: 2 });
-let salePrice = ref(0);
-let total = 0;
-
 // 记录当前运行的副作用函数，避免多次收集
 let activeEffect = null;
 // 存放响应式对象的属性依赖关系
 const targetMap = new WeakMap();
 
-const effect = (effFn) => {
+export function watchEffect(effFn) {
   activeEffect = effFn;
   effFn();
   activeEffect = null;
-};
-
-effect(() => {
-  salePrice.value = product.price * 0.9;
-  // console.log("salePrice", salePrice.value);
-});
-
-effect(() => {
-  total = salePrice.value * product.quantity;
-  console.log("total: " + total);
-});
+}
 
 // 追踪副作用依赖
-function track(target, key) {
+export function track(target, key) {
   // 只有副作用函数执行时，才进行依赖收集
   if (!activeEffect) return;
 
@@ -45,11 +31,12 @@ function track(target, key) {
 }
 
 // 执行依赖中的副作用
-function trigger(target, key) {
+export function trigger(target, key) {
   const depsMap = targetMap.get(target);
   if (!depsMap) return;
-  console.log(`${key} trigger`);
+
   const deps = depsMap.get(key);
+  console.log(`${key} trigger`);
 
   if (deps) {
     deps.forEach((effect) => effect());
@@ -59,7 +46,7 @@ function trigger(target, key) {
 // 返回响应式对象，通过拦截对象的 getter、setter
 // getter: 依赖收集
 // setter: 触发依赖的副作用
-function reactive(target) {
+export function reactive(target) {
   const handler = {
     get(target, key, receiver) {
       track(target, key);
@@ -81,7 +68,7 @@ function reactive(target) {
   return new Proxy(target, handler);
 }
 
-function ref(raw) {
+export function ref(raw) {
   const r = {
     get value() {
       track(r, "value");
@@ -97,5 +84,3 @@ function ref(raw) {
 
   return r;
 }
-
-product.price = 10;
